@@ -18,6 +18,9 @@ export default function NavBar() {
                         <Link to="/design">Design</Link>
                     </li>
                     <li>
+                        <Link to="/result">Result</Link>
+                    </li>
+                    <li>
                         <Link to="/contact">Contact</Link>
                     </li>
                 </ul>

@@ -48,3 +48,4 @@ export const COLOR_LIST=[
     code: 12
    }
   ];
+  export const PIXEL_SIZE = 30;

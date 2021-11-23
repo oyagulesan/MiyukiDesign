@@ -1,60 +1,923 @@
 import React, { useEffect, useContext, useReducer } from 'react'
 import reducer from '../reducer/appReducer'
 import {
-  ADD_TO_CART,
-  REMOVE_CART_ITEM,
-  TOGGLE_CART_ITEM_AMOUNT,
-  CLEAR_CART,
-  COUNT_CART_TOTALS,
+  SET_PEYOTE,
+  SET_SELECTED_COLORS,
+  SET_DIMENSIONS,
+  SET_DESIGN,
 } from '../action/actions.js'
+import { COLOR_LIST } from '../util/Constants';
 
 const getLocalStorage = () => {
-  let cart = localStorage.getItem('cart')
-  if (cart) {
-    return JSON.parse(localStorage.getItem('cart'))
+  let miyukiDesign = localStorage.getItem('miyukiDesign')
+  if (miyukiDesign) {
+    return JSON.parse(localStorage.getItem('miyukiDesign'))
   } else {
-    return []
+    return initialState;
   }
 }
 
 const initialState = {
-  cart: getLocalStorage(),
-  total_items: 0,
-  total_amount: 0,
-  shipping_fee: 534,
+  isPeyote: true,
+  selectedColors: COLOR_LIST, // All colors selected by default
+  dimensions: [20, 10],
+  design: [
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ],
+    [
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "black",
+        "code": 5
+      },
+      {
+        "name": "blue",
+        "code": 3
+      },
+      {
+        "name": "aqua",
+        "code": 11
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "white",
+        "code": 2
+      },
+      {
+        "name": "blank",
+        "code": 1
+      },
+      {
+        "name": "blank",
+        "code": 1
+      }
+    ]
+  ]
 }
 
 const AppContext = React.createContext()
 
 export const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const storedStateText = localStorage.getItem('miyukiDesign')
+  let storedState = initialState;
+  if (storedStateText) {
+    storedState = JSON.parse(localStorage.getItem('miyukiDesign'))
+  }
 
-  // add to cart
-  const addToCart = (id, color, amount, product) => {
-    dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } })
+  const [state, dispatch] = useReducer(reducer, storedState);
+
+  const setPeyote = (isPeyote) => {
+    dispatch({ type: SET_PEYOTE, payload: isPeyote });
   }
-  // remove item
-  const removeItem = (id) => {
-    dispatch({ type: REMOVE_CART_ITEM, payload: id })
+  const isPeyote = () => {
+    return state.isPeyote;
   }
-  // toggle amount
-  const toggleAmount = (id, value) => {
-    console.log(id, value)
-    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } })
+  const setDesign = (design) => {
+    dispatch({ type: SET_DESIGN, payload: design });
   }
-  // clear cart
-  const clearCart = () => {
-    dispatch({ type: CLEAR_CART })
+  const getDesign = () => {
+    return state.design;
   }
+  const setSelectedColors = (colors) => {
+    dispatch({ type: SET_SELECTED_COLORS, payload: colors });
+  }
+  const getSelectedColors = () => {
+    return state.selectedColors;
+  }
+
+  const setDimensions = (dimensions) => {
+    dispatch({ type: SET_DIMENSIONS, payload: dimensions });
+  }
+  const getDimensions = () => {
+    return state.dimensions;
+  }
+  useEffect(() => {
+    getLocalStorage();
+  })
 
   useEffect(() => {
-    dispatch({ type: COUNT_CART_TOTALS })
-    localStorage.setItem('cart', JSON.stringify(state.cart))
-  }, [state.cart])
+    localStorage.setItem('miyukiDesign', JSON.stringify(state))
+  }, [state])
 
   return (
     <AppContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}
+      value={{
+        ...state,
+        setPeyote, isPeyote,
+        setSelectedColors, getSelectedColors,
+        setDimensions, getDimensions,
+        setDesign, getDesign
+      }}
     >
       {children}
     </AppContext.Provider>
