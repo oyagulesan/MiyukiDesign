@@ -3,36 +3,19 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link,
-  // useRouteMatch,
-  // useParams
 } from "react-router-dom";
 import HomeComponent from '../components/HomeComponent';
 import DesignComponent from '../components/DesignComponent';
 import SelectionComponent from '../components/SelectionComponent';
 import ContactComponent from '../components/ContactComponent';
 import ResultComponent from '../components/ResultComponent';
+import NavBar from './NavBar';
 
 export default function RouterUtility() {
   return (
     <Router>
-      <div className='navStyle'>
-        <nav className='navStyle'>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/selection">Selection</Link>
-            </li>
-            <li>
-              <Link to="/design">Design</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
+      <div className="compContainerStyle">
+        <NavBar />
 
         <div className="componentStyle">
           <Routes>
@@ -67,4 +50,3 @@ function Contact() {
 function Result() {
   return <ResultComponent />;
 }
-

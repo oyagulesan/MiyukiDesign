@@ -6,11 +6,9 @@ import ColorComponent from './ColorComponent';
 
 export default function DesignComponent() {
   return (
-    <div>
-      <p>DESIGN COMPONENT</p>
-      <CanvasComponent />
-      <div className={'colorContainer'}>
-      <p>SELECTION COMPONENT</p>
+    <div className={'componentContainer'}>
+      <p className={'title'}>DESIGN COMPONENT</p>
+      <div className={'columnStyle'}>
       {
         COLOR_LIST.map((clr, idx) => {
           return (
@@ -18,8 +16,9 @@ export default function DesignComponent() {
           )
         })
       }
-    </div>
-      <NavLink to="/result">Show Result</NavLink>
+      </div>
+      <CanvasComponent />
+      <NavLink className={'navStyle'} to="/result">Show Result</NavLink>
     </div>
   )
 }

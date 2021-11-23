@@ -3,10 +3,9 @@ import React from 'react'
 export default function ColorComponent(props) {
   // Needs prod clr with name & code
   const style = {
-    'background-color': 'orange',
-    width: 40,
-    height: 40,
-    flex: 1,
+    minHeight: '40px',
+    width: '40px',
+    display: 'block',
   }
   const onSelect = (event) => {
     console.log('...on select', event.target.checked);
@@ -15,10 +14,9 @@ export default function ColorComponent(props) {
     console.log('...on onRadioSelect', event);
   }
   return (
-    <div style={{backgroundColor: 'orange', flexDirection: 'row'}}>
-      <p style={{flex: 1}}>{props.clr.name + '....'}</p>
-      <div className={'colorStyle'} style={style}>
-      </div>
+    <div className={'colorStyle'}>
+      <p>{props.clr.name}</p>
+      <div style={style} className={props.clr.name + 'Style'}/>
       {props.disabled
         ? <input type='radio' onClick={onRadioSelect}></input> 
         : <input type='checkbox' onClick={onSelect}></input>}
