@@ -74,29 +74,37 @@ export default function CanvasComponent(props) {
     if (props.selectedColor === null) {
       return;
     }
-    const canvasObj = canvasRef.current;
-    const rect = canvasObj.getBoundingClientRect();
-    const xInt = Math.floor(rect.width/((isPeyote() ? 0.5 : 0) + parseInt(getDimensions()[0])));
-    const yInt = Math.floor(rect.height/parseInt(getDimensions()[1]));
-    let x1 = Math.floor((event.clientX - rect.left)/ xInt);
-    const y1 = Math.floor((event.clientY - rect.top)/ yInt);
-    if (isPeyote() && y1 % 2 === 1) {
-      x1 = Math.floor((event.clientX - rect.left - (xInt/2))/ xInt);
-    }
-
-    if (x1 >= parseInt(getDimensions()[0]) || x1 < 0) {
-      return;
-    }
-
     let design = getDesign();
-    if (design && design.length === parseInt(getDimensions()[0]) && design[0].length === parseInt(getDimensions()[1])) {
-      // Proceed
+    if (props.allSelected) {
+      for (let i = 0; i < getDimensions()[0]; i++) {
+        for (let j = 0; j < getDimensions()[1]; j++) {
+          // Set selected color to all pixels
+          design[i][j] = props.selectedColor;
+        }
+      }
     } else {
-      design = initializeDesign();  
+      const canvasObj = canvasRef.current;
+      const rect = canvasObj.getBoundingClientRect();
+      const xInt = Math.floor(rect.width/((isPeyote() ? 0.5 : 0) + parseInt(getDimensions()[0])));
+      const yInt = Math.floor(rect.height/parseInt(getDimensions()[1]));
+      let x1 = Math.floor((event.clientX - rect.left)/ xInt);
+      const y1 = Math.floor((event.clientY - rect.top)/ yInt);
+      if (isPeyote() && y1 % 2 === 1) {
+        x1 = Math.floor((event.clientX - rect.left - (xInt/2))/ xInt);
+      }
+  
+      if (x1 >= parseInt(getDimensions()[0]) || x1 < 0) {
+        return;
+      }
+  
+      if (design && design.length === parseInt(getDimensions()[0]) && design[0].length === parseInt(getDimensions()[1])) {
+        // Proceed
+      } else {
+        design = initializeDesign();  
+      }
+      // Set selected color to the pixel
+      design[x1][y1] = props.selectedColor;
     }
-
-    // Set selected color to the pixel
-    design[x1][y1] = props.selectedColor;
     setDesign(design);
     draw();
   }
