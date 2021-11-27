@@ -46,11 +46,24 @@ export default function CanvasComponent(props) {
           ctx.stroke();
         } else {
           ctx.fillStyle = clr.name;
-          if (isPeyote() && y % 2 === 1) {
+          if (isPeyote() && y % 2 === 1) {            
             ctx.fillRect((x * xInt) + (xInt / 2), y * yInt, xInt, yInt);
           } else {
             ctx.fillRect(x * xInt, y * yInt, xInt, yInt);
           }
+          // Draw border
+          ctx.strokeStyle = clr.name === 'white' ? 'black' : 'white';
+          ctx.lineWidth = '1';
+          if (isPeyote() && y % 2 === 1) {
+            ctx.fillRect((x * xInt) + (xInt / 2), y * yInt, xInt, yInt);
+            ctx.beginPath();
+            ctx.rect((x * xInt) + (xInt / 2), y * yInt, xInt, yInt);
+         } else {
+            ctx.fillRect((x * xInt), y * yInt, xInt, yInt);
+            ctx.beginPath();
+            ctx.rect(x * xInt, y * yInt, xInt, yInt);
+          }
+          ctx.stroke();
         }
       }  
     }
@@ -121,8 +134,7 @@ export default function CanvasComponent(props) {
         }
       </div>
       <canvas className={'canvasStyle'}
-        style={{border: 'solid', 
-          width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, 
+        style={{width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, 
           height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleClick}/>
     </div>
   )

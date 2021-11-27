@@ -186,12 +186,12 @@ input {
 }
 .pinkStyle {
   background-color: pink;
-  border-width: 1px;
   border-color: #444;
+  border: solid;
 }
 .purpleStyle {
   background-color: purple;
-  border-width: 1px;
+  border-width: 2px;
   border-color: #ccc;
 }
 .lightBlueStyle {
