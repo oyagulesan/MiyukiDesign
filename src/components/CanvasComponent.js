@@ -13,6 +13,8 @@ export default function CanvasComponent(props) {
     const xCnt= isPeyote() ? parseInt(getDimensions()[0]) + 0.5 : parseInt(getDimensions()[0]);
     const xInt = Math.floor(canvasObj.width/xCnt);
     const yInt = Math.floor(canvasObj.height/parseInt(getDimensions()[1]));
+    // yInt is assigned same value with xInt to make sure square shapes
+    // const yInt = xInt;
     ctx.clearRect(0, 0, rect.width, rect.height);
     let design = getDesign();
     if (design && design.length === parseInt(getDimensions()[0]) && design[0].length === parseInt(getDimensions()[1])) {
@@ -35,7 +37,7 @@ export default function CanvasComponent(props) {
             ctx.fillRect((x * xInt) + (xInt / 2), y * yInt, xInt, yInt);
             ctx.beginPath();
             ctx.rect((x * xInt) + (xInt / 2), y * yInt, xInt, yInt);
-          } else {
+         } else {
             ctx.fillStyle = 'rgb(68, 102, 170)';
             ctx.fillRect((x * xInt), y * yInt, xInt, yInt);
             ctx.beginPath();
@@ -87,6 +89,7 @@ export default function CanvasComponent(props) {
       const rect = canvasObj.getBoundingClientRect();
       const xInt = Math.floor(rect.width/((isPeyote() ? 0.5 : 0) + parseInt(getDimensions()[0])));
       const yInt = Math.floor(rect.height/parseInt(getDimensions()[1]));
+
       let x1 = Math.floor((event.clientX - rect.left)/ xInt);
       const y1 = Math.floor((event.clientY - rect.top)/ yInt);
       if (isPeyote() && y1 % 2 === 1) {
@@ -109,7 +112,19 @@ export default function CanvasComponent(props) {
     draw();
   }
   return (
-    <canvas className={'canvasStyle'}
-      style={{width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, height: `${parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`}} ref={canvasRef} onClick={handleClick}/>
+    <div>
+      <div className={'horizontal'}>
+        {
+          getDesign().map((arr, idx) => (
+            <div style={{color: 'white', transform: "rotate(270deg)", width: `${props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)}px`}}>{idx}</div>
+          ))
+        }
+      </div>
+      <canvas className={'canvasStyle'}
+        style={{border: 'solid', 
+          width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, 
+          height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleClick}/>
+    </div>
   )
+  
 }

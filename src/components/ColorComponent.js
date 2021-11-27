@@ -1,4 +1,5 @@
 import React from 'react'
+import Checkbox from 'rc-checkbox';
 
 export default function ColorComponent(props) {
   // Needs prod clr with name & code
@@ -30,8 +31,8 @@ export default function ColorComponent(props) {
       <p>{props.clr.name}</p>
       <div style={style} className={props.clr.name + 'Style'}/>
       {props.disabled
-        ? <input type='radio' checked={props.selectedColor} onChange={onRadioSelect}></input> 
-        : <input type='checkbox' defaultChecked={initialSelection()} onClick={onSelect}></input>}
+        ? <Checkbox checked={props.selectedColor} onChange={onRadioSelect}></Checkbox> 
+        : <Checkbox defaultChecked={initialSelection()} onChange={onSelect}></Checkbox>}
     </div>
   )
 }

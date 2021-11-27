@@ -4,6 +4,7 @@ import CanvasComponent from './CanvasComponent';
 import ColorComponent from './ColorComponent';
 import { useAppContext } from '../context/appContext';
 import { COLOR_LIST } from '../util/Constants';
+import Checkbox from 'rc-checkbox';
 
 export default function DesignComponent() {
   const { getDimensions, getSelectedColors, setDesign } = useAppContext();
@@ -42,7 +43,7 @@ export default function DesignComponent() {
           <CanvasComponent allSelected={allSelected} selectedColor={selectedColor}/>
           <button className={'buttonStyle'} onClick={onReset}>RESET</button>
           <label>Select all</label>
-          <input type="checkbox" checked={allSelected} onChange={onSelectAll}></input>
+          <Checkbox checked={allSelected} onChange={onSelectAll}></Checkbox>
         </div>
         <div className={'verticalStyle'}>
         {

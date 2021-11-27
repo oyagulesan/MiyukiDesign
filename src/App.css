@@ -151,36 +151,58 @@ input {
 }
 .blueStyle {
   background-color: #00F;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .greenStyle {
   background-color: #0F0;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .whiteStyle {
   background-color: #FFF;
+  border-width: 1px;
+  border-color: #444;
 }
 .blackStyle {
   background-color: #000;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .yellowStyle {
   background-color: yellow;
+  border-width: 1px;
+  border-color: #444;
 }
 .orangeStyle {
   background-color: orange;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .redStyle {
   background-color: red;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .pinkStyle {
   background-color: pink;
+  border-width: 1px;
+  border-color: #444;
 }
 .purpleStyle {
   background-color: purple;
+  border-width: 1px;
+  border-color: #ccc;
 }
 .lightBlueStyle {
   background-color: lightBlue;
+  border-width: 1px;
+  border-color: #444;
 }
 .aquaStyle {
   background-color: aqua;
+  border-width: 1px;
+  border-color: #444;
 }
 .title {
   width: 100%;
@@ -213,4 +235,14 @@ label.warning {
   font-weight: bold;
   background-color: rgb(100, 200, 200);
   color: rgb(255, 0, 0);
+}
+.saveButtonStyle {
+  margin: 20px;
+  font-weight: bold;
+  background-color: rgb(100, 200, 200);
+  color: rgb(0, 100, 0);
+}
+input[type="checkbox"] {
+  font-size: xx-large;
+  size: 100rem;
 }
