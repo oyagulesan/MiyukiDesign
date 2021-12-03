@@ -3,7 +3,6 @@ import { COLOR_LIST } from '../util/Constants';
 import ColorComponent from './ColorComponent';
 import { useAppContext } from '../context/appContext';
 import { NavLink } from 'react-router-dom';
-import checkbox from 'rc-checkbox';
 
 export default function SelectionComponent() {
   const { setPeyote, isPeyote,
@@ -16,11 +15,11 @@ export default function SelectionComponent() {
   }
   const onSetWidth = (event) => {
     setDimensions([event.target.value, getDimensions()[1]]);
-    setDesign([]);
+    setDesign(initializeDesign());
   }
   const onSetHeight = (event) => {
     setDimensions([getDimensions()[0], event.target.value]);
-    setDesign([]);
+    setDesign(initializeDesign());
   }
   const onColorSelectionChange = (clr, selected) => {
     const clrs = getSelectedColors().filter( c => c.name !== clr.name);
@@ -28,6 +27,18 @@ export default function SelectionComponent() {
       clrs.push(clr)
     }
     setSelectedColors(clrs);
+  }
+  const initializeDesign = () => {
+    const design = [];
+    // Initialize design
+    for (let x = 0; x < getDimensions()[0]; x++) {
+      const tmp = [];
+      for (let y = 0; y < getDimensions()[1]; y++) {
+        tmp.push(COLOR_LIST[0]);
+      }
+      design.push(tmp);
+    }
+    return design;
   }
   return (
     <div className={'componentContainer'}>
