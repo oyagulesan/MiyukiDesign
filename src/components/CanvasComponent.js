@@ -1,13 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '../context/appContext';
 import { PIXEL_SIZE, COLOR_LIST } from '../util/Constants';
 
 export default function CanvasComponent(props) {
   const { getDimensions, setDesign, getDesign, isPeyote } = useAppContext();
+  const [designMode, setDesignMode] = useState(false);
 
   const canvasRef = useRef(null);
   const draw = () => {
     const canvasObj = canvasRef.current;
+  
     const ctx = canvasObj.getContext('2d');
     const rect = canvasObj.getBoundingClientRect();
     const xCnt= isPeyote() ? parseInt(getDimensions()[0]) + 0.5 : parseInt(getDimensions()[0]);
@@ -71,6 +73,13 @@ export default function CanvasComponent(props) {
   useEffect(() => {
     draw();
   });
+  useEffect(() => {
+    setDesignMode(false);
+    if (canvasRef && canvasRef.current) {
+      const canvasObj = canvasRef.current;
+      canvasObj.onmousemove = null; 
+    }
+  }, [props.selectedColor]);
 
   const initializeDesign = () => {
     const design = [];
@@ -84,7 +93,11 @@ export default function CanvasComponent(props) {
     }
     return design;
   }
-
+  const handleToggleDesign = () => {
+    const canvasObj = canvasRef.current;
+    canvasObj.onmousemove = designMode ? null : handleClick;
+    setDesignMode(!designMode);
+  }
   const handleClick = (event) => {
     if (props.selectedColor === null) {
       return;
@@ -124,18 +137,22 @@ export default function CanvasComponent(props) {
     setDesign(design);
     draw();
   }
+
   return (
-    <div>
+    <div style={{flex: 1, alignContent: 'center'}}>
       <div className={'horizontal'}>
         {
           getDesign().map((arr, idx) => (
-            <div style={{color: 'white', transform: "rotate(270deg)", width: `${props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)}px`}}>{idx}</div>
+            <div key={idx} style={{color: 'white', transform: "rotate(270deg)", width: `${props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)}px`}}>{idx}</div>
           ))
         }
       </div>
       <canvas className={'canvasStyle'}
         style={{width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, 
-          height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleClick}/>
+          height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleToggleDesign}/>
+      {
+        designMode && <div style={{width: '100%', backgroundColor: 'red'}}><p style={{width: '100%', color: 'white', textAlign: 'center'}}>DESIGN MODE ON</p></div>
+      }
     </div>
   )
   
