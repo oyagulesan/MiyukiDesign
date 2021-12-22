@@ -149,7 +149,7 @@ export default function CanvasComponent(props) {
       </div>
       <canvas className={'canvasStyle'}
         style={{width: `${((isPeyote() ? 0.5 : 0 ) + parseInt(getDimensions()[0])) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2))}px`, 
-          height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleToggleDesign}/>
+          height: `${(parseInt(getDimensions()[1]) * (props.selectedColor ? PIXEL_SIZE : (PIXEL_SIZE / 2)))}px`}} ref={canvasRef} onClick={handleClick}/>
       {
         designMode && <div style={{width: '100%', backgroundColor: 'red'}}><p style={{width: '100%', color: 'white', textAlign: 'center'}}>DESIGN MODE ON</p></div>
       }
